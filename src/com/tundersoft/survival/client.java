@@ -10,7 +10,7 @@ public class client {
 	
 	public static void main(String[] args) {
 		
-		SocketManagerService.getInstance().connect("180.97.81.180", 53705);
+		SocketManagerService.getInstance().connect("180.97.81.180", 58190);
 		SocketManagerService.getInstance().send("hello");
 		
 		try {
