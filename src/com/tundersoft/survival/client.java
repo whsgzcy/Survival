@@ -4,14 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.tundersoft.survival.socket.SocketManagerService;
+import com.tundersoft.survival.main.Survival;
 
 public class client {
 	
 	public static void main(String[] args) {
 		
-		SocketManagerService.getInstance().connect("180.97.81.180", 58190);
-		SocketManagerService.getInstance().send("hello");
+		Survival survival = new Survival("","180.97.81.180", 58190);
+		survival.init();
+		survival.connect();
 		
 		try {
 			new BufferedReader(new InputStreamReader(System.in)).readLine();
