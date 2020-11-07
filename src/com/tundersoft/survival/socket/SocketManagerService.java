@@ -1,14 +1,10 @@
 package com.tundersoft.survival.socket;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
+import com.tundersoft.survival.bean.MapBean;
 import com.tundersoft.survival.constant.SurvivalConstant;
 import com.tundersoft.survival.interf.OnServerCallBack;
 
@@ -18,6 +14,8 @@ public class SocketManagerService {
 
 	private Socket mSocket;
 	private static SocketManagerService mInstance = null;
+	
+	MapBean mMapBean = new MapBean();
 
 	private SocketManagerService() {
 	}
@@ -56,6 +54,58 @@ public class SocketManagerService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setMapBean(MapBean bean){
+		mMapBean = bean;
+	}
+	
+	public MapBean getMapBean(){
+		return mMapBean;
+	}
+	
+	/**
+	 * up
+	 */
+	public void upAndAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.W + SurvivalConstant.V);
+	}
+	
+	public void upAndNoAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.W + SurvivalConstant.NV);
+	}
+	
+	/**
+	 * left
+	 */
+	public void leftAndAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.A + SurvivalConstant.V);
+	}
+	
+	public void leftAndNoAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.A + SurvivalConstant.NV);
+	}
+	
+	/**
+	 * down
+	 */
+	public void downAndAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.S + SurvivalConstant.V);
+	}
+	
+	public void downNOAndAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.S + SurvivalConstant.NV);
+	}
+	
+	/**
+	 * right
+	 */
+	public void rightAndAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.D + SurvivalConstant.V);
+	}
+	
+	public void rightAndNoAttack(){
+		send(mMapBean.getToken() + SurvivalConstant.D + SurvivalConstant.NV);
 	}
 
 	// read server

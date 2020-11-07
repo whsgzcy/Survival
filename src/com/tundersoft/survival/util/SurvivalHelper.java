@@ -29,9 +29,9 @@ public class SurvivalHelper {
 	 * @return
 	 */
 	public static String getMap(String maps) {
-		int index = maps.indexOf("]");
-		String map = maps.substring(index + 1 + 1, index + 1 + 1 + 625);
-		return map;
+		int location = maps.indexOf("LOCATION");
+		maps = maps.substring(location - 2 - 625, location - 2);
+		return maps;
 	}
 
 	/**
@@ -41,10 +41,12 @@ public class SurvivalHelper {
 	 * @return
 	 */
 	public static String getToken(String maps) {
-		int index = maps.indexOf("]");
-		int sIndex = maps.indexOf(" ");
-		String token = maps.substring(sIndex + 1, index);
-		return token;
+		maps = maps.substring(maps.indexOf("MAP"), maps.indexOf("LOCATION"));
+		String[] array = maps.split(" ");
+		if (array.length > 1) {
+			return array[1];
+		}
+		return null;
 	}
 
 	/**
@@ -53,41 +55,30 @@ public class SurvivalHelper {
 	 * @param maps
 	 * @return
 	 */
-	public static List<String> getAllPlayersLocation(String maps) {
-		int index = maps.indexOf("]");
-		maps = maps.substring(index + 1 + 1 + 1 + 625, maps.length());
-		String[] array = maps.split("]");
-		if (array.length > 1) {
-			List<String> locations = new ArrayList<>();
-			String prx = array[1].trim();
-			String[] prxArray = prx.split(" ");
-			for (int i = 0; i < prxArray.length; i++) {
-				locations.add(prxArray[i]);
-			}
-			return locations;
+	public static List<Integer> getAllPlayersLocation(String maps) {
+		maps = maps.substring(maps.indexOf("LOCATION") + getToken(maps).length() + 8 + 1 + 1, maps.indexOf("SCORE") -1 -1);
+		String[] array = maps.split(" ");
+		List<Integer> locations = new ArrayList<>();
+		for(int i = 0; i < array.length; i++){
+			locations.add(Integer.parseInt(array[i].trim()));
 		}
-		return null;
+		return locations;
 	}
-	
+
 	/**
 	 * get all players score
+	 * 
 	 * @param maps
 	 * @return
 	 */
-	public static List<String> getAllPlayersScore(String maps){
-		int index = maps.indexOf("]");
-		maps = maps.substring(index + 1 + 1 + 1 + 625, maps.length());
-		String[] array = maps.split("]");
-		if (array.length > 3) {
-			List<String> scores = new ArrayList<>();
-			String prx = array[3].trim();
-			String[] prxArray = prx.split(" ");
-			for (int i = 0; i < prxArray.length; i++) {
-				scores.add(prxArray[i]);
-			}
-			return scores;
+	public static List<Integer> getAllPlayersScore(String maps) {
+		maps = maps.substring(maps.indexOf("SCORE") + getToken(maps).length() + 5 + 1 + 1, maps.lastIndexOf("]"));
+		String[] array = maps.split(" ");
+		List<Integer> scores = new ArrayList<>();
+		for(int i = 0; i < array.length; i++){
+			scores.add(Integer.parseInt(array[i].trim()));
 		}
-		return null;
+		return scores;
 	}
-
+	
 }
